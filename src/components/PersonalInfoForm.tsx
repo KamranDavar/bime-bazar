@@ -1,4 +1,5 @@
 import * as React from "react";
+import Modal from "./modal";
 
 function PersonalInfoForm() {
   return (
@@ -13,13 +14,13 @@ function PersonalInfoForm() {
         <input
           type="text"
           id="nationalId"
-          className="text-neutral-500 text-right text-sm font-medium leading-5 whitespace-nowrap border bg-white self-stretch mt-6 px-5 py-5 border-solid border-zinc-400 max-md:pr-0"
+          className="text-neutral-500 text-right text-sm font-medium leading-5 whitespace-nowrap border bg-white self-stretch mt-6 px-5 py-5 border-solid border-zinc-400"
           placeholder="کد ملی"
         />
         <input
           type="text"
           id="phoneNumber"
-          className="text-neutral-500 text-right text-sm font-medium leading-5 whitespace-nowrap border bg-white self-stretch mt-6 px-5 py-5 border-solid border-zinc-400 max-md:pr-0"
+          className="text-neutral-500 text-right text-sm font-medium leading-5 whitespace-nowrap border bg-white self-stretch mt-6 px-5 py-5 border-solid border-zinc-400"
           placeholder="شماره تلفن همراه"
         />
         <p className="text-black text-right text-base font-semibold leading-7 whitespace-nowrap mt-8">
@@ -28,9 +29,7 @@ function PersonalInfoForm() {
         <p className="text-black text-right text-sm leading-7 mt-2.5">
           لطفا آدرسی را که می‌خواهید روی بیمه‌نامه درج شود، وارد کنید.
         </p>
-        <button className="text-black text-center text-base font-semibold leading-6 whitespace-nowrap bg-amber-300 self-center w-full items-center mt-8 px-5 py-4">
-          انتخاب از آدرس‌های من
-        </button>
+        <Modal/>
         <div>
           <button
             type="submit"
