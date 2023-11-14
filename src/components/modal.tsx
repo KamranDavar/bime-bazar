@@ -1,6 +1,6 @@
 "use client";
 import { MouseEvent, useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
+import Close from "../../public/close.svg";
 
 function Modal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +10,7 @@ function Modal() {
     setIsOpen(!isOpen);
   };
 
-  const handleBlurClick = (e:  MouseEvent<HTMLDivElement>) => {
+  const handleBlurClick = (e: MouseEvent<HTMLDivElement>) => {
     const targetElement = e.target as HTMLElement;
     if (isOpen && targetElement.classList.contains("bg-blur")) {
       setIsOpen(false);
@@ -34,7 +34,9 @@ function Modal() {
           <section className="bg-white flex flex-col items-stretch min-w-full sm:min-w-fit  h-fit">
             <header className="items-center flex w-full flex-col mt-6 pb-2  rounded-t-lg px-5 border-b border-gray-200">
               <div className="flex justify-between gap-5 w-full">
-                <AiOutlineClose onClick={toggleModal} />
+                <button onClick={toggleModal}>
+                  <img src={Close.src} />
+                </button>
                 <h1 className="text-black text-right text-base font-medium leading-6 whitespace-nowrap mr-0">
                   انتخاب آدرس
                 </h1>

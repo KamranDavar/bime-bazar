@@ -1,5 +1,4 @@
 import PersonalInfoForm from '@/components/PersonalInfoForm'
-import Modal from '@/components/modal'
 
 export default function Home() {
   return (
