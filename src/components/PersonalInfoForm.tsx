@@ -3,27 +3,23 @@
 import * as React from "react";
 import Modal from "./modal";
 import { useForm, SubmitHandler } from "react-hook-form"
+import { AddressType, InputsType } from "@/app/types";
 
-export type Inputs = {
-  nationalId: string
-  phoneNumber: string
-  addressId: string;
+type PropsType={
+  addresses: AddressType[]
 }
 
-function PersonalInfoForm() {
+function PersonalInfoForm({addresses}: PropsType) {
   
     const {
       register,
       handleSubmit,
       resetField,
       formState: { errors, isValid },
-    } = useForm<Inputs>({
+    } = useForm<InputsType>({
       defaultValues:{}
     })
-    const onSubmit: SubmitHandler<Inputs> = (data) =>{ console.log(data)}
-
-    console.log('isValid', isValid)
-    console.log('errors', errors)
+    const onSubmit: SubmitHandler<InputsType> = (data) =>{ console.log(data)}
 
 
   return (
@@ -55,7 +51,7 @@ function PersonalInfoForm() {
         <p className="text-black text-right text-sm leading-7 mt-2.5">
           لطفا آدرسی را که می‌خواهید روی بیمه‌نامه درج شود، وارد کنید.
         </p>
-        <Modal resetField={resetField} register={register}/>
+        <Modal resetField={resetField} register={register} addresses={addresses}/>
         <div>
           <button
             type="submit"

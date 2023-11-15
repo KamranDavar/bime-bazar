@@ -2,15 +2,15 @@
 import { MouseEvent, useState } from "react";
 import Close from "../../public/close.svg";
 import { UseFormResetField, UseFormRegister } from "react-hook-form";
-import { Inputs } from "./PersonalInfoForm";
-
+import { AddressType, InputsType } from "@/app/types";
 
 type ModalProps = {
-  resetField: UseFormResetField<Inputs>;
-  register: UseFormRegister<Inputs>;
+  resetField: UseFormResetField<InputsType>;
+  register: UseFormRegister<InputsType>;
+  addresses: AddressType[];
 };
 
-function Modal({ resetField, register }: ModalProps) {
+function Modal({ resetField, register, addresses }: ModalProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const openModal = (e: MouseEvent<HTMLButtonElement>) => {
@@ -62,57 +62,32 @@ function Modal({ resetField, register }: ModalProps) {
             </header>
             <div className="self-stretch flex w-full justify-between gap-4 -mr-5 px-5">
               <div className="flex grow basis-[0%] flex-col my-5">
-                <div className="flex w-48 max-w-full gap-3 pr-1">
-                  <h2 className="text-black text-right text-sm font-medium leading-5">
-                    قرش نانیرفآ‌شقن تکرش
-                  </h2>
-                  <input
-                    type="radio"
-                    value={0}
-                    {...register("addressId", {
-                      required: "Please select a address",
-                    })}
-                  />
-                </div>
-                <p className="text-neutral-500 text-right text-xs leading-5 self-stretch mt-2.5">
-                  فارس، شیراز، خیابان جمهوری، بالاتر از فلان، پلاک ۶، واحد ۲۳۴{" "}
-                </p>
-                <div className="flex w-48 max-w-full gap-3 mt-6 pr-1">
-                  <h2 className="text-black text-right text-sm font-medium leading-5">
-                    قرش نانیرفآ‌شقن تکرش
-                  </h2>
-                  <input
-                    type="radio"
-                    value={1}
-                    {...register("addressId", {
-                      required: "Please select a address",
-                    })}
-                  />
-                </div>
-                <p className="text-neutral-500 text-right text-xs leading-5 self-stretch mt-2.5">
-                  فارس، شیراز، خیابان جمهوری، بالاتر از فلان، پلاک ۶، واحد ۲۳۴{" "}
-                </p>
-                <div className="flex w-48 max-w-full gap-3 mt-6 pr-1">
-                  <h2 className="text-black text-right text-sm font-medium leading-5">
-                    قرش نانیرفآ‌شقن تکرش
-                  </h2>
-                  <input
-                    type="radio"
-                    value={2}
-                    {...register("addressId", {
-                      required: "Please select a address",
-                    })}
-                  />
-                </div>
-                <p className="text-neutral-500 text-right text-xs leading-5 self-stretch mt-2.5">
-                  فارس، شیراز، خیابان جمهوری، بالاتر از فلان، پلاک ۶، واحد ۲۳۴{" "}
-                </p>
+                {addresses.map((item) => (
+                  <div key={item.id}>
+                    <p className="text-neutral-500 text-right text-xs leading-5 self-stretch mt-2.5">
+                      {item.details}
+                    </p>
+                    <div className="flex w-48 max-w-full gap-3 mt-6 pr-1">
+                      <h2 className="text-black text-right text-sm font-medium leading-5">
+                       {item.name}
+                      </h2>
+                      <input
+                        type="radio"
+                        value={item.id}
+                        {...register("addressId", {
+                          required: "Please select a address",
+                        })}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
             <footer className="flex w-full flex-col items-stretch p-5 border-t border-gray-300 ">
               <button
-              onClick={onSelectButtonClick}
-              className="text-white text-center bg-black items-center px-5 py-2.5">
+                onClick={onSelectButtonClick}
+                className="text-white text-center bg-black items-center px-5 py-2.5"
+              >
                 انتخاب
               </button>
             </footer>
