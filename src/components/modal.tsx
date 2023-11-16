@@ -64,21 +64,19 @@ function Modal({ resetField, register, addresses }: ModalProps) {
               <div className="flex grow basis-[0%] flex-col my-5">
                 {addresses.map((item) => (
                   <div key={item.id}>
-                    <p className="text-neutral-500 text-right text-xs leading-5 self-stretch mt-2.5">
-                      {item.details}
-                    </p>
                     <div className="flex w-48 max-w-full gap-3 mt-6 pr-1">
                       <h2 className="text-black text-right text-sm font-medium leading-5">
-                       {item.name}
+                        {item.name}
                       </h2>
                       <input
                         type="radio"
                         value={item.id}
-                        {...register("addressId", {
-                          required: "Please select a address",
-                        })}
+                        {...register("addressId")}
                       />
                     </div>
+                    <p className="text-neutral-500 text-right text-xs leading-5 self-stretch mt-2.5">
+                      {item.details}
+                    </p>
                   </div>
                 ))}
               </div>
