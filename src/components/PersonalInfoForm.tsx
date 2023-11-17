@@ -7,6 +7,8 @@ import { AddressType, InputsType } from "@/app/types";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { isValidIranianNationalCode } from "../../lib/valifationFunctions";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const schema = yup.object({
   nationalId: yup
@@ -20,12 +22,23 @@ const schema = yup.object({
   addressId: yup.string().required(),
 });
 
-type PropsType = {
-  addresses: AddressType[];
-};
+type PropsType = {};
 
-function PersonalInfoForm({ addresses }: PropsType) {
+function PersonalInfoForm({}: PropsType) {
   const [loading, setLoading] = React.useState(false);
+  const router = useRouter();
+  const [addresses, setAddresses] = React.useState<AddressType[]>([]);
+
+  async function getAddresses() {
+    const res = await axios.get(
+      "https://front-end-task.bmbzr.ir/my-addresses/",
+      { withCredentials: true }
+    );
+    setAddresses(res.data);
+  }
+  React.useEffect(() => {
+    getAddresses();
+  }, []);
   const {
     register,
     handleSubmit,
@@ -35,18 +48,16 @@ function PersonalInfoForm({ addresses }: PropsType) {
     defaultValues: {},
     resolver: yupResolver(schema),
   });
-  const onSubmit: SubmitHandler<InputsType> = (data) => {
+  
+  const onSubmit: SubmitHandler<InputsType> = async (data) => {
     setLoading(true);
-    fetch("https://front-end-task.bmbzr.ir/order/completion/", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => console.log("response", response.json()))
-      .catch((response) => {
-        console.log(response);
+    axios
+      .post("https://front-end-task.bmbzr.ir/order/completion/", data, {
+        withCredentials: true,
+      })
+      .then((response) => router.push("/success"))
+      .catch((err) => {
+        console.log("err", err);
         // throw new Error("Failed to fetch data");
       })
       .finally(() => setLoading(false));
