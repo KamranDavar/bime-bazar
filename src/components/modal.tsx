@@ -11,7 +11,7 @@ type ModalProps = {
 
 function Modal({ setValue, addresses }: ModalProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [id, setId] = useState<string | undefined>();
+  const [id, setId] = useState<string | null>(localStorage.getItem('addressId'));
 
   const openModal = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

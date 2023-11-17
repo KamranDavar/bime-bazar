@@ -28,14 +28,21 @@ function PersonalInfoForm() {
   const { data } = useAddresses();
   const { mutate, isLoading, isSuccess } = usePostCompletion();
 
+  const initialData = {
+    nationalId: localStorage.getItem("nationalId") || "",
+    phoneNumber: localStorage.getItem("phoneNumber") || "",
+    addressId: localStorage.getItem("addressId") || "",
+  };
+
   const {
     register,
     handleSubmit,
     setValue,
+    getValues,
     watch,
-    formState: { errors, isValid, isSubmitted },
+    formState: { errors },
   } = useForm<InputsType>({
-    defaultValues: {},
+    defaultValues: initialData,
     resolver: yupResolver(schema),
   });
   const addressId = watch("addressId");
@@ -44,6 +51,9 @@ function PersonalInfoForm() {
     mutate(data);
   };
   useEffect(() => {
+    localStorage.setItem("addressId", getValues("addressId"));
+    localStorage.setItem("phoneNumber", getValues("phoneNumber"));
+    localStorage.setItem("nationalId", getValues("nationalId"));
     isSuccess && router.push("/success");
   }, [isSuccess]);
 
