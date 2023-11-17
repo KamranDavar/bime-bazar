@@ -1,14 +1,15 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Modal from "./modal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { AddressType, InputsType } from "@/app/types";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { isValidIranianNationalCode } from "../../lib/valifationFunctions";
-import axios from "axios";
 import { useRouter } from "next/navigation";
+import useAddresses from "@/hooks/useGetAddresses";
+import usePostCompletion from "@/hooks/usePostCmpletion";
 
 const schema = yup.object({
   nationalId: yup
@@ -22,48 +23,34 @@ const schema = yup.object({
   addressId: yup.string().required(),
 });
 
-type PropsType = {};
-
-function PersonalInfoForm({}: PropsType) {
-  const [loading, setLoading] = React.useState(false);
+function PersonalInfoForm() {
   const router = useRouter();
-  const [addresses, setAddresses] = React.useState<AddressType[]>([]);
+  const { data } = useAddresses();
+  const { mutate, isLoading, isSuccess } = usePostCompletion();
 
-  async function getAddresses() {
-    const res = await axios.get(
-      "https://front-end-task.bmbzr.ir/my-addresses/",
-      { withCredentials: true }
-    );
-    setAddresses(res.data);
-  }
-  React.useEffect(() => {
-    getAddresses();
-  }, []);
   const {
     register,
     handleSubmit,
     resetField,
-    formState: { errors, isValid },
+    setValue,
+    getValues,
+    watch,
+    formState: { errors, isValid, isSubmitted },
   } = useForm<InputsType>({
     defaultValues: {},
     resolver: yupResolver(schema),
   });
-  
+  const addressId = watch('addressId');
+
   const onSubmit: SubmitHandler<InputsType> = async (data) => {
-    setLoading(true);
-    axios
-      .post("https://front-end-task.bmbzr.ir/order/completion/", data, {
-        withCredentials: true,
-      })
-      .then((response) => router.push("/success"))
-      .catch((err) => {
-        console.log("err", err);
-        // throw new Error("Failed to fetch data");
-      })
-      .finally(() => setLoading(false));
+    mutate(data);
   };
+  useEffect(() => {
+    isSuccess && router.push("/success");
+  }, [isSuccess]);
 
   console.log("errors", errors);
+  console.log("getValues(addressId)", getValues("addressId"));
   return (
     <form className="bg-white" onSubmit={handleSubmit(onSubmit)}>
       <header className="text-black text-right text-lg font-semibold leading-7 whitespace-nowrap shadow-md bg-white w-full px-5 py-5">
@@ -105,20 +92,20 @@ function PersonalInfoForm({}: PropsType) {
           آدرس جهت درج روی بیمه نامه
         </p>
         <p className="text-black text-right text-sm leading-7 mt-2.5">
-          لطفا آدرسی را که می‌خواهید روی بیمه‌نامه درج شود، وارد کنید.
+          {addressId
+            ? (data as AddressType[]).find(
+                (item) => item.id === addressId
+              )?.details
+            : " لطفا آدرسی را که می‌خواهید روی بیمه‌نامه درج شود، وارد کنید."}
         </p>
-        <Modal
-          resetField={resetField}
-          register={register}
-          addresses={addresses}
-        />
+        <Modal setValue={setValue} addresses={data} />
         <div>
           <button
             type="submit"
-            className="bg-[black] text-[white] rounded text-center cursor-pointer mt-7 py-2 px-5 w-auto"
-            // disabled={!isValid}
+            className="bg-[black] text-[white]  text-center cursor-pointer mt-7 py-2 px-5 w-auto disabled:cursor-not-allowed"
+            disabled={(isSubmitted && !isValid) || isLoading}
           >
-            {loading ? "loading..." : " تایید و ادامه"}
+            {isLoading ? "loading..." : " تایید و ادامه"}
           </button>
         </div>
       </section>

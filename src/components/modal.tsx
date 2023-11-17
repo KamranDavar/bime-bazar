@@ -1,17 +1,17 @@
 "use client";
-import { MouseEvent, useState } from "react";
+import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
 import Close from "../../public/close.svg";
-import { UseFormResetField, UseFormRegister } from "react-hook-form";
+import { UseFormSetValue } from "react-hook-form";
 import { AddressType, InputsType } from "@/app/types";
 
 type ModalProps = {
-  resetField: UseFormResetField<InputsType>;
-  register: UseFormRegister<InputsType>;
+  setValue: UseFormSetValue<InputsType>;
   addresses: AddressType[];
 };
 
-function Modal({ resetField, register, addresses }: ModalProps) {
+function Modal({ setValue, addresses }: ModalProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [id, setId] = useState<string | undefined>();
 
   const openModal = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -19,7 +19,6 @@ function Modal({ resetField, register, addresses }: ModalProps) {
   };
   const closeModal = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    resetField("addressId");
     setIsOpen(false);
   };
 
@@ -27,11 +26,11 @@ function Modal({ resetField, register, addresses }: ModalProps) {
     const targetElement = e.target as HTMLElement;
     if (isOpen && targetElement.classList.contains("bg-blur")) {
       setIsOpen(false);
-      resetField("addressId");
     }
   };
   const onSelectButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setValue("addressId", id as string);
     setIsOpen(false);
   };
 
@@ -71,7 +70,8 @@ function Modal({ resetField, register, addresses }: ModalProps) {
                       <input
                         type="radio"
                         value={item.id}
-                        {...register("addressId")}
+                        onClick={() => setId(item.id)}
+                        defaultChecked={item.id === id}
                       />
                     </div>
                     <p className="text-neutral-500 text-right text-xs leading-5 self-stretch mt-2.5">
@@ -85,6 +85,7 @@ function Modal({ resetField, register, addresses }: ModalProps) {
               <button
                 onClick={onSelectButtonClick}
                 className="text-white text-center bg-black items-center px-5 py-2.5"
+                disabled={!id}
               >
                 انتخاب
               </button>
