@@ -31,9 +31,7 @@ function PersonalInfoForm() {
   const {
     register,
     handleSubmit,
-    resetField,
     setValue,
-    getValues,
     watch,
     formState: { errors, isValid, isSubmitted },
   } = useForm<InputsType>({
@@ -49,8 +47,6 @@ function PersonalInfoForm() {
     isSuccess && router.push("/success");
   }, [isSuccess]);
 
-  console.log("errors", errors);
-  console.log("getValues(addressId)", getValues("addressId"));
   return (
     <form className="bg-white" onSubmit={handleSubmit(onSubmit)}>
       <header className="text-black text-right text-lg font-semibold leading-7 whitespace-nowrap shadow-md bg-white w-full px-5 py-5">
