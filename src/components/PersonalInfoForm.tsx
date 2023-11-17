@@ -59,7 +59,7 @@ function PersonalInfoForm() {
 
   return (
     <form
-      className="bg-white h-[100vh] flex flex-col w-full max-w-[460px]"
+      className="bg-white h-[100vh] md:h-auto flex flex-col w-full max-w-[460px]"
       onSubmit={handleSubmit(onSubmit)}
     >
       <header className="text-black text-right text-lg font-semibold leading-7 whitespace-nowrap shadow-md bg-white w-full px-5 py-5">
