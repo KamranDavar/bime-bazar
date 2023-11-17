@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
+import { MouseEvent, useState } from "react";
 import Close from "../../public/close.svg";
 import { UseFormSetValue } from "react-hook-form";
 import { AddressType, InputsType } from "@/app/types";
