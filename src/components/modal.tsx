@@ -50,33 +50,35 @@ function Modal({ setValue, addresses }: ModalProps) {
         >
           <section className="bg-white flex flex-col items-stretch min-w-full sm:min-w-fit  h-fit">
             <header className="items-center flex w-full flex-col mt-6 pb-2  rounded-t-lg px-5 border-b border-gray-200">
-              <div className="flex justify-between gap-5 w-full">
-                <button onClick={closeModal}>
-                  <img src={Close.src} />
-                </button>
+              <div className="flex  justify-between gap-5 w-full">
                 <h1 className="text-black text-right text-base font-medium leading-6 whitespace-nowrap mr-0">
                   انتخاب آدرس
                 </h1>
+                <button onClick={closeModal}>
+                  <img src={Close.src} />
+                </button>
               </div>
             </header>
             <div className="self-stretch flex w-full justify-between gap-4 -mr-5 px-5">
               <div className="flex grow basis-[0%] flex-col my-5">
                 {addresses.map((item) => (
                   <div key={item.id}>
-                    <div className="flex w-48 max-w-full gap-3 mt-6 pr-1">
-                      <h2 className="text-black text-right text-sm font-medium leading-5">
-                        {item.name}
-                      </h2>
+                    <div className="flex max-w-full gap-3 mt-6 pr-5 items-start ">
                       <input
                         type="radio"
                         value={item.id}
                         onClick={() => setId(item.id)}
                         defaultChecked={item.id === id}
                       />
+                      <div className="flex flex-col grow">
+                        <h2 className="text-black text-right text-sm font-medium leading-5">
+                          {item.name}
+                        </h2>
+                      <p className="text-neutral-500 text-right text-xs leading-5 self-stretch mt-2.5">
+                        {item.details}
+                      </p>
+                      </div>
                     </div>
-                    <p className="text-neutral-500 text-right text-xs leading-5 self-stretch mt-2.5">
-                      {item.details}
-                    </p>
                   </div>
                 ))}
               </div>

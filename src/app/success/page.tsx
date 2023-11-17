@@ -1,11 +1,11 @@
-'use client'
+"use client";
 import { useRouter } from "next/navigation";
 
 export default async function Home() {
-    const router= useRouter()
+  const router = useRouter();
   return (
     <main className="flex min-h-screen flex-col items-center justify-between ">
-      <div className="flex flex-col w-full md:max-w-[346px]  bg-white h-[100vh]">
+      <div className="flex flex-col w-full md:max-w-[460px]  bg-white h-[100vh]">
         <header className="text-black text-right text-lg font-semibold leading-7 whitespace-nowrap shadow-md w-full px-5 py-5">
           تکمیل اطلاعات
         </header>
@@ -15,8 +15,9 @@ export default async function Home() {
           </p>
           <div className="flex justify-end">
             <button
-            onClick={()=>router.back()}
-            className="bg-[black] text-[white]  text-center cursor-pointer mt-7 py-2 px-5 w-auto disabled:cursor-not-allowed disabled:bg-stone-500">
+              onClick={() => router.back()}
+              className="bg-[black] text-[white]  text-center cursor-pointer mt-7 py-2 px-5 w-auto disabled:cursor-not-allowed disabled:bg-stone-500"
+            >
               بازگشت
             </button>
           </div>
