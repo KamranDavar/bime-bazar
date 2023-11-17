@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={vazirmatn.className}>{children}</body>
+      <body className={vazirmatn.className }>{children}</body>
     </html>
   )
 }
