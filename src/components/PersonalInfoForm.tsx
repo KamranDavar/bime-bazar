@@ -102,8 +102,8 @@ function PersonalInfoForm() {
         <div>
           <button
             type="submit"
-            className="bg-[black] text-[white]  text-center cursor-pointer mt-7 py-2 px-5 w-auto disabled:cursor-not-allowed"
-            disabled={(isSubmitted && !isValid) || isLoading}
+            className="bg-[black] text-[white]  text-center cursor-pointer mt-7 py-2 px-5 w-auto disabled:cursor-not-allowed disabled:bg-stone-500"
+            disabled={isLoading}
           >
             {isLoading ? "loading..." : " تایید و ادامه"}
           </button>

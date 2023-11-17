@@ -84,7 +84,7 @@ function Modal({ setValue, addresses }: ModalProps) {
             <footer className="flex w-full flex-col items-stretch p-5 border-t border-gray-300 ">
               <button
                 onClick={onSelectButtonClick}
-                className="text-white text-center bg-black items-center px-5 py-2.5"
+                className="text-white text-center bg-black items-center px-5 py-2.5 disabled:cursor-not-allowed disabled:bg-stone-800"
                 disabled={!id}
               >
                 انتخاب
