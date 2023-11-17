@@ -10,6 +10,8 @@ import { isValidIranianNationalCode } from "../../lib/valifationFunctions";
 import { useRouter } from "next/navigation";
 import useAddresses from "@/hooks/useGetAddresses";
 import usePostCompletion from "@/hooks/usePostCmpletion";
+import Spinner from "./spiner";
+
 
 const schema = yup.object({
   nationalId: yup
@@ -114,10 +116,10 @@ function PersonalInfoForm() {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="bg-[black] text-[white]  text-center cursor-pointer mt-7 py-2 px-5 w-auto disabled:cursor-not-allowed disabled:bg-stone-500"
+            className="bg-[black] text-[white]  text-center cursor-pointer mt-7 py-2 px-5 w-auto disabled:cursor-not-allowed disabled:bg-stone-800"
             disabled={isLoading}
           >
-            {isLoading ? "loading..." : " تایید و ادامه"}
+            {isLoading ? <Spinner/> : " تایید و ادامه"}
           </button>
         </div>
       </section>
