@@ -64,6 +64,7 @@ function PersonalInfoForm() {
             errors.nationalId && "border-rose-600"
           }`}
           placeholder="کد ملی"
+          inputMode='numeric'
         />
         {errors.nationalId && (
           <p className="text-red-600 text-right text-xs font-medium leading-5 whitespace-nowrap">
@@ -78,6 +79,7 @@ function PersonalInfoForm() {
             errors.nationalId && "border-rose-600"
           }`}
           placeholder="شماره تلفن همراه"
+          inputMode='numeric'
         />
         {errors.phoneNumber && (
           <p className="text-red-600 text-right text-xs font-medium leading-5 whitespace-nowrap">
